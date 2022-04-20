@@ -25,7 +25,7 @@ else:
 class SlideAndVideoShow(App):
     def __init__(self):
         super(SlideAndVideoShow, self).__init__()
-        self.INSTAGRAM_ACCESS_TOKEN = "IGQVJXaERPZA3YtSFpGS3hJOXAyaFhIblhtNDh6T0NRc0I5ZADBnZA2tWWmN4eWY2b1dTcTgxNEhuRE85anBiUk5RLXRCMTlGaHltUG12WVRfVGpRZAU9yZAnZAOTHo4OUhsQ3Q5aTFQWmJ2VGVYLVFOOU12dkJRc2s3MjIzdVdr"
+        self.INSTAGRAM_ACCESS_TOKEN = "IGQVJWZAkx6UGwwSnRheUQ3ajBmNjNsT3M1NmppenFjWjJXR1JMNVYtOTlRdGdIT3hCY3ZADbUdDQ2FwdWtsV1pDYlowQkJscGFVLTVnSDc0ekhCMVFuNkxPcVVJaFRfVjhpcmh5MVRiczNoY0dOdU1lZAEhOX1JXdEk1ekxF"
         self.MOST_RECENT_PHOTOS_AND_VIDEOS_URL = "https://graph.instagram.com/me/media?fields=id,caption&access_token={}".format(
             self.INSTAGRAM_ACCESS_TOKEN)
         self.LOCAL_PHOTO_AND_VIDEO_DIRECTORY_PATH = "./instagram_photos_and_videos/"
@@ -99,6 +99,7 @@ class SlideAndVideoShow(App):
 
         if internet_connection:
             new_photos_and_videos_downloaded = False
+            print(json_data)
             json_medias = json_data["data"]
             # and check to see whether or not they have already been downloaded
             try:
