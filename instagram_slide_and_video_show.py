@@ -174,6 +174,7 @@ class SlideAndVideoShow(App):
         # This line is for running under Windows but crashes things on the Raspberry Pi
         # Window.fullscreen = "auto"
         Window.show_cursor = False
+        Window.maximize()
         self.photo = Image()
         self.photo.allow_stretch = True
         # Without this line the Raspberry Pi starts blacking out photos after a few images.
