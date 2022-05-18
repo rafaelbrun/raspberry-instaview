@@ -1,6 +1,8 @@
 # Raspberry Pi Instagram Slide and Video Show version 1.2, April 9, 2020
 # See https://github.com/tachyonlabs/raspberry_pi_slide_and_video_show
 
+# Refresh Token: https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token={{ _.access_token }}
+
 from datetime import datetime
 import random
 import sys
