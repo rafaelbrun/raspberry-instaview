@@ -27,7 +27,8 @@ else:
 class SlideAndVideoShow(App):
     def __init__(self):
         super(SlideAndVideoShow, self).__init__()
-        self.INSTAGRAM_ACCESS_TOKEN = "IGQVJYQnFSdkp4WDRFeTJrNExkTF9IY3o4U0plWHFIU1MzZAHNraHp4NkNWQUNjTnVOVy02aUZAsYjlZAUlJGTDktYUxFSk1DOE9pX2dtbEZAiU0xoZA3FPV0p6ZA25IN25aa3dlUFNkdWd0WFRKY0YyeGY3ZA3ZAweUp4XzVfa0dJ"
+        self.INSTAGRAM_ACCESS_TOKEN = "IGQVJXUFNDczFMVWVqMXB6LWVxcUtrZAXpBWk5TTWRxY1pwdk1LdS1tdm43cS1hY1NlLVJLalFnc3paeHV1MWVfYXE5QVJuOTdWbFR6LU44V21nYXJVTUpfWmZAmWnFES0tEU0Jlb2tn"
+        self.INSTAGRAM_REFRESHED_TOKEN = self.INSTAGRAM_ACCESS_TOKEN
         self.MOST_RECENT_PHOTOS_AND_VIDEOS_URL = "https://graph.instagram.com/me/media?fields=id,caption&access_token={}".format(
             self.INSTAGRAM_ACCESS_TOKEN)
         self.LOCAL_PHOTO_AND_VIDEO_DIRECTORY_PATH = "./instagram_photos_and_videos/"
@@ -50,6 +51,13 @@ class SlideAndVideoShow(App):
         # get the filenames of all newly and/or previously-downloaded photos and videos
         self.photos_and_videos = self.get_photo_and_video_filenames()
         self.current_image_index = -1
+
+    def refreshToken(self):
+        url = f"https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token={self.INSTAGRAM_REFRESHED_TOKEN}"
+      
+        self.INSTAGRAM_REFRESHED_TOKEN = json.loads(requests.get(url.text))
+      
+        print('\n REFRESH TOKEN: ', self.INSTAGRAM_REFRESHED_TOKEN)
 
     def get_preferences_from_ini_file(self):
         if os.path.isfile(self.INI_FILE):
@@ -152,6 +160,9 @@ class SlideAndVideoShow(App):
         # check for new photos and videos once an hour
         Clock.schedule_once(
             self.download_any_new_instagram_photos_or_videos, self.HOUR_IN_SECONDS)
+      
+        # Get a new token once an hour 
+        Clock.schedule_once(self.refreshToken, self.HOUR_IN_SECONDS)
 
     def on_position_change(self, instance, value):
         # I'm doing it this way because eos wasn't always firing at the end of a video,
