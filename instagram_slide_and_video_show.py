@@ -29,7 +29,7 @@ class SlideAndVideoShow(App):
         super(SlideAndVideoShow, self).__init__()
         self.INSTAGRAM_ACCESS_TOKEN = "IGQVJXVDFjYXhDVUU4V3ZAnaEVuYVJoaW5Xc1NZAS1R6WWlCbXJTNUhYZAGJzdjFUSVhBamp2dzFQU2lIcmpaT0VzaGdTam1zS3dqNHNOcGFmUk5LQ20xUW9pajZAhOUQwcFk3RjZAKMFNR"
         self.INSTAGRAM_REFRESHED_TOKEN = self.INSTAGRAM_ACCESS_TOKEN
-        self.MOST_RECENT_PHOTOS_AND_VIDEOS_URL = "https://graph.instagram.com/me/media?fields=id,caption&access_token={}".format(self.INSTAGRAM_ACCESS_TOKEN)
+        self.MOST_RECENT_PHOTOS_AND_VIDEOS_URL = "https://graph.instagram.com/me/media?fields=id,caption&access_token={}".format(self.INSTAGRAM_REFRESHED_TOKEN)
         self.LOCAL_PHOTO_AND_VIDEO_DIRECTORY_PATH = "./instagram_photos_and_videos/"
         self.INI_FILE = "./instagram_slide_and_video_show.ini"
         self.title = "Instagram Slide and Video Show"
@@ -237,7 +237,7 @@ class SlideAndVideoShow(App):
             # you need to fix your Internet connection and/or Instagram Access Token.
             print("Nenhuma foto ou vídeo armazenado foi encontrado. Certifique-se de que você está")
             print("(1) conectado à internet, e ")
-            print("(2) que você obteve um token de acesso do Instagram para a conta do Instagram que deseja usar e o inseriu corretamente o valor do token em self.INSTAGRAM_ACCESS_TOKEN no início do código,")
+            print("(2) que você obteve um token de acesso do Instagram para a conta do Instagram que deseja usar e o inseriu corretamente o token na variável 'self.INSTAGRAM_ACCESS_TOKEN' no início do código,")
             print("depois disso tente de novo.")
             exit()
 
