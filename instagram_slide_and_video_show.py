@@ -104,7 +104,7 @@ class SlideAndVideoShow(App):
                 self.MOST_RECENT_PHOTOS_AND_VIDEOS_URL).text)
         except:
             internet_connection = False
-            print("Unable to reach Instagram ... check your Internet connection. Showing stored photos and videos.")
+            print("Não foi possível acessar o Instagram... verifique sua conexão com a Internet. Mostrando fotos e vídeos armazenados.")
 
         if internet_connection:
             new_photos_and_videos_downloaded = False
@@ -215,7 +215,10 @@ class SlideAndVideoShow(App):
 
         next = self.LOCAL_PHOTO_AND_VIDEO_DIRECTORY_PATH + \
             self.photos_and_videos[self.current_image_index]
-        if next.endswith(".jpg"):
+        if next.endswith(".jpg") or next.endswith(".webp?stp=dst-jpg"):
+            if(next.endswith(".webp?stp=dst-jpg")):
+                next.replace(".webp?stp=dst-jpg", ".jpg")
+                
             self.photo.source = next
             self.video.opacity = 0
             self.photo.opacity = 1
