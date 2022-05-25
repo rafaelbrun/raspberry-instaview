@@ -122,6 +122,8 @@ class SlideAndVideoShow(App):
                     jpg_or_mp4_end = photo_or_video_url.index("jpg") + 3
                     photo_or_video_filename = photo_or_video_url[photo_or_video_url.rindex(
                         "/") + 1:jpg_or_mp4_end]
+                    if(photo_or_video_filename.endswith(".webp?stp=dst-jpg")):
+                        photo_or_video_filename = photo_or_video_filename.replace(".webp?stp=dst-jpg", ".jpg")
                     photo_or_video_file = requests.get(
                         photo_or_video_url).content
                     with open(self.LOCAL_PHOTO_AND_VIDEO_DIRECTORY_PATH + photo_or_video_filename, 'wb') as handler:
@@ -148,7 +150,7 @@ class SlideAndVideoShow(App):
     #                        with open(self.LOCAL_PHOTO_AND_VIDEO_DIRECTORY_PATH + photo_or_video_filename, 'wb') as handler:
     #                          handler.write(photo_or_video_file)
             except:
-                print("Instagram error:", )
+                print("Instagram error:")
 
             if new_photos_and_videos_downloaded:
                 # update the list of filenames in the instagram_photos_and_videos subdirectory
@@ -215,9 +217,9 @@ class SlideAndVideoShow(App):
 
         next = self.LOCAL_PHOTO_AND_VIDEO_DIRECTORY_PATH + \
             self.photos_and_videos[self.current_image_index]
-        if next.endswith(".jpg") or next.endswith(".webp?stp=dst-jpg"):
-            if(next.endswith(".webp?stp=dst-jpg")):
-                next.replace(".webp?stp=dst-jpg", ".jpg")
+        if next.endswith(".jpg"):
+            #if(next.endswith(".webp?stp=dst-jpg")):
+                #next.replace(".webp?stp=dst-jpg", ".jpg")
                 
             self.photo.source = next
             self.video.opacity = 0
