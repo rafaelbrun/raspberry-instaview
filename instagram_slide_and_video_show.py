@@ -27,7 +27,7 @@ else:
 class SlideAndVideoShow(App):
     def __init__(self):
         super(SlideAndVideoShow, self).__init__()
-        self.INSTAGRAM_ACCESS_TOKEN = "IGQVJXUFNDczFMVWVqMXB6LWVxcUtrZAXpBWk5TTWRxY1pwdk1LdS1tdm43cS1hY1NlLVJLalFnc3paeHV1MWVfYXE5QVJuOTdWbFR6LU44V21nYXJVTUpfWmZAmWnFES0tEU0Jlb2tn"
+        self.INSTAGRAM_ACCESS_TOKEN = "IGQVJXVDFjYXhDVUU4V3ZAnaEVuYVJoaW5Xc1NZAS1R6WWlCbXJTNUhYZAGJzdjFUSVhBamp2dzFQU2lIcmpaT0VzaGdTam1zS3dqNHNOcGFmUk5LQ20xUW9pajZAhOUQwcFk3RjZAKMFNR"
         self.INSTAGRAM_REFRESHED_TOKEN = self.INSTAGRAM_ACCESS_TOKEN
         self.MOST_RECENT_PHOTOS_AND_VIDEOS_URL = "https://graph.instagram.com/me/media?fields=id,caption&access_token={}".format(
             self.INSTAGRAM_ACCESS_TOKEN)
