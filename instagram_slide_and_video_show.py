@@ -37,7 +37,7 @@ class SlideAndVideoShow(App):
         self.LOCAL_PHOTO_AND_VIDEO_DIRECTORY_PATH = "./instagram_photos_and_videos/"
         self.INI_FILE = "./instagram_slide_and_video_show.ini"
         self.title = "Instagram Slide and Video Show"
-        self.HOUR_IN_SECONDS = 60 * 1
+        self.HOUR_IN_SECONDS = 60 * 60
         # default configuration settings, used to create instagram_slide_and_video_show.ini if it doesn't already exist
         self.SECONDS_BEFORE_CHANGING_PHOTO = 15
         self.PHOTO_AND_VIDEO_DISPLAY_ORDER_DIRECTORY = "directory"
