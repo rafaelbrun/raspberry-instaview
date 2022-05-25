@@ -16,6 +16,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.core.window import Window
 from kivy.app import App
 import kivy
+
 kivy.require('1.10.0')  # replace with your current Kivy version !
 # Python 3 has ConfigParser renamed to configparser for PEP 8 compliance
 if sys.version_info[0] < 3:
@@ -27,13 +28,16 @@ else:
 class SlideAndVideoShow(App):
     def __init__(self):
         super(SlideAndVideoShow, self).__init__()
-        self.INSTAGRAM_ACCESS_TOKEN = "IGQVJXVDFjYXhDVUU4V3ZAnaEVuYVJoaW5Xc1NZAS1R6WWlCbXJTNUhYZAGJzdjFUSVhBamp2dzFQU2lIcmpaT0VzaGdTam1zS3dqNHNOcGFmUk5LQ20xUW9pajZAhOUQwcFk3RjZAKMFNR"
+        with open('INSTAGRAM_ACCESS_TOKEN.json', 'r') as access_token_file:
+            access_token = json.load(access_token_file)['access_token']
+            print(access_token)
+        self.INSTAGRAM_ACCESS_TOKEN = access_token
         self.INSTAGRAM_REFRESHED_TOKEN = self.INSTAGRAM_ACCESS_TOKEN
         self.MOST_RECENT_PHOTOS_AND_VIDEOS_URL = "https://graph.instagram.com/me/media?fields=id,caption&access_token={}".format(self.INSTAGRAM_REFRESHED_TOKEN)
         self.LOCAL_PHOTO_AND_VIDEO_DIRECTORY_PATH = "./instagram_photos_and_videos/"
         self.INI_FILE = "./instagram_slide_and_video_show.ini"
         self.title = "Instagram Slide and Video Show"
-        self.HOUR_IN_SECONDS = 60 * 60
+        self.HOUR_IN_SECONDS = 60 * 1
         # default configuration settings, used to create instagram_slide_and_video_show.ini if it doesn't already exist
         self.SECONDS_BEFORE_CHANGING_PHOTO = 15
         self.PHOTO_AND_VIDEO_DISPLAY_ORDER_DIRECTORY = "directory"
@@ -51,13 +55,18 @@ class SlideAndVideoShow(App):
         self.photos_and_videos = self.get_photo_and_video_filenames()
         self.current_image_index = -1
 
-    def refreshToken(self):
+    def refreshToken(self,value=None):
+        
         url = f"https://graph.instagram.com/refresh_access_token?grant_type=ig_refresh_token&access_token={self.INSTAGRAM_REFRESHED_TOKEN}"
       
-        self.INSTAGRAM_REFRESHED_TOKEN = json.loads(requests.get(url.text))
+        self.INSTAGRAM_REFRESHED_TOKEN = json.loads(requests.get(url).text)['access_token']
       
         print('\n REFRESH TOKEN: ', self.INSTAGRAM_REFRESHED_TOKEN)
-
+        
+        with open('INSTAGRAM_ACCESS_TOKEN.json', 'w') as outfile:
+            refresh_token =  {'access_token': self.INSTAGRAM_REFRESHED_TOKEN}
+            json.dump(refresh_token, outfile)
+    
     def get_preferences_from_ini_file(self):
         if os.path.isfile(self.INI_FILE):
             # if the .ini file exists, read in the configuration settings
@@ -163,7 +172,7 @@ class SlideAndVideoShow(App):
             self.download_any_new_instagram_photos_or_videos, self.HOUR_IN_SECONDS)
       
         # Get a new token once an hour 
-        Clock.schedule_once(self.refreshToken, self.HOUR_IN_SECONDS)
+        Clock.schedule_once(self.refreshToken, self.HOUR_IN_SECONDS+10)
 
     def on_position_change(self, instance, value):
         # I'm doing it this way because eos wasn't always firing at the end of a video,
