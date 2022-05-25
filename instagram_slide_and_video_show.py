@@ -29,8 +29,7 @@ class SlideAndVideoShow(App):
         super(SlideAndVideoShow, self).__init__()
         self.INSTAGRAM_ACCESS_TOKEN = "IGQVJXVDFjYXhDVUU4V3ZAnaEVuYVJoaW5Xc1NZAS1R6WWlCbXJTNUhYZAGJzdjFUSVhBamp2dzFQU2lIcmpaT0VzaGdTam1zS3dqNHNOcGFmUk5LQ20xUW9pajZAhOUQwcFk3RjZAKMFNR"
         self.INSTAGRAM_REFRESHED_TOKEN = self.INSTAGRAM_ACCESS_TOKEN
-        self.MOST_RECENT_PHOTOS_AND_VIDEOS_URL = "https://graph.instagram.com/me/media?fields=id,caption&access_token={}".format(
-            self.INSTAGRAM_ACCESS_TOKEN)
+        self.MOST_RECENT_PHOTOS_AND_VIDEOS_URL = "https://graph.instagram.com/me/media?fields=id,caption&access_token={}".format(self.INSTAGRAM_ACCESS_TOKEN)
         self.LOCAL_PHOTO_AND_VIDEO_DIRECTORY_PATH = "./instagram_photos_and_videos/"
         self.INI_FILE = "./instagram_slide_and_video_show.ini"
         self.title = "Instagram Slide and Video Show"
@@ -115,7 +114,7 @@ class SlideAndVideoShow(App):
             try:
                 for media in json_medias:
                     media_id = media["id"]
-                    GET_MEDIA_BY_ID_URL = f"https://graph.instagram.com/{media_id}?fields=id,media_type,media_url,username,timestamp&access_token={self.INSTAGRAM_ACCESS_TOKEN}"
+                    GET_MEDIA_BY_ID_URL = f"https://graph.instagram.com/{media_id}?fields=id,media_type,media_url,username,timestamp&access_token={self.INSTAGRAM_REFRESHED_TOKEN}"
                     media_data = json.loads(
                         requests.get(GET_MEDIA_BY_ID_URL).text)
                     print(media_data)
@@ -236,10 +235,10 @@ class SlideAndVideoShow(App):
         if not photo_and_video_filenames:
             # If there are no stored photos and/or videos, and the program was not able to download any,
             # you need to fix your Internet connection and/or Instagram Access Token.
-            print("No stored photos or videos found. Make sure that you're")
-            print("(1) connected to the Internet, and")
-            print("(2) that you've obtained an Instagram Access Token for the Instagram account you want to use, and entered it correctly as the self.INSTAGRAM_ACCESS_TOKEN value at the beginning of the code,")
-            print("and then try again.")
+            print("Nenhuma foto ou vídeo armazenado foi encontrado. Certifique-se de que você está")
+            print("(1) conectado à internet, e ")
+            print("(2) que você obteve um token de acesso do Instagram para a conta do Instagram que deseja usar e o inseriu corretamente o valor do token em self.INSTAGRAM_ACCESS_TOKEN no início do código,")
+            print("depois disso tente de novo.")
             exit()
 
         return photo_and_video_filenames
